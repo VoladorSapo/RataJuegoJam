@@ -6,25 +6,25 @@ public class rat_movement : MonoBehaviour
 {
     public rat_holes r_hole;
     Rigidbody2D rb_rat;
-    public int speed;
-    public int jumpforce;
-    public float fall;
-    public float gravity;
-    public float slowdown;
-    public float slowdownjump;
-    public float moveAxis;
-    public float acc_rate;
-    public float decc_rate;
-    public float movepow;
-    public bool grounded;
-    public KeyCode jump_key;
-    public KeyCode action_key;
-    public bool visible;
-    public float PressTimeSet;
-    public float PressTime;
-    public float GroundTimeSet;
-    public float GroundTime;
-    public bool hidden;
+    public int speed; //Velocidad maxima que puede alcanzar la rata
+    public int jumpforce; //La fuerza del salto de la rata
+    public float fall; //La velocidad de caida, para que caiga mas rapido que sube
+    public float gravity; //Lo que le afecta la gravedad
+    public float slowdown; //Numero que se multiplica a la velocidad para realentizarla, varia con la situacion
+    public float slowdownjump; //Cuanto se realentiza en el aire
+    public float moveAxis; //El input de izquierda y derecha
+    public float acc_rate; //Cuanto mas alto, mas rapido acelera
+    public float decc_rate;  //Cuanto mas alto, mas rapido desacelera
+    public float movepow; //La aceleracion se eleva a este numero, para que tarde menos en llegar a velocidades mas altas
+    public bool grounded; //Si esta tocando el suelo o no
+    public KeyCode jump_key; //La tecla de salto
+    public KeyCode action_key; //La tecla de interactuar (cadenas, agujeros)
+    public bool visible; //Si la pueden ver los enemigos o no
+    public float PressTimeSet; //Cuanto tiempo tiene para saltar desde que se da al boton
+    float PressTime;
+    public float GroundTimeSet; //Cuanto tiempo tiene para saltar desde que deja de tocar el suelo (coyote time)
+    float GroundTime;
+    public bool hidden; //Si esta escondida en un agujero o no
     [SerializeField] LayerMask groundlayer;
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -81,7 +81,7 @@ public class rat_movement : MonoBehaviour
             }
             if (rb_rat.velocity.y < 0)
             {
-                rb_rat.gravityScale = gravity /** fall*/;
+                rb_rat.gravityScale = gravity * fall;
             }
             else
             {
