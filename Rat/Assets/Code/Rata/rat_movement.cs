@@ -12,7 +12,8 @@ public class rat_movement : MonoBehaviour
     public float gravity; //Lo que le afecta la gravedad
     public float slowdown; //Numero que se multiplica a la velocidad para realentizarla, varia con la situacion
     public float slowdownjump; //Cuanto se realentiza en el aire
-    public float moveAxis; //El input de izquierda y derecha
+    public float moveAxisX; //El input de izquierda y derecha
+    public float moveAxisY; //El input de arriba y abajo
     public float acc_rate; //Cuanto mas alto, mas rapido acelera
     public float decc_rate;  //Cuanto mas alto, mas rapido desacelera
     public float movepow; //La aceleracion se eleva a este numero, para que tarde menos en llegar a velocidades mas altas
@@ -25,6 +26,7 @@ public class rat_movement : MonoBehaviour
     public float GroundTimeSet; //Cuanto tiempo tiene para saltar desde que deja de tocar el suelo (coyote time)
     float GroundTime;
     public bool hidden; //Si esta escondida en un agujero o no
+    public bool Grabbed; //Si esta agarrada a una cadena
     [SerializeField] LayerMask groundlayer;
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -39,10 +41,12 @@ public class rat_movement : MonoBehaviour
         {
             Die();
         }
+
     }
     void Start()
     {
         rb_rat = GetComponent<Rigidbody2D>();
+        Grabbed = false;
     }
     private void Update()
     {
@@ -55,10 +59,12 @@ public class rat_movement : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        moveAxisX = Input.GetAxisRaw("Horizontal");
+        moveAxisY = Input.GetAxisRaw("Vertical");
+
         if (!hidden)
         {
-            moveAxis = Input.GetAxisRaw("Horizontal");
-            float sptrg = speed * moveAxis;
+            float sptrg = speed * moveAxisX;
             float spdf = sptrg - rb_rat.velocity.x;
             float rate = (Mathf.Abs(spdf) > 0.01) ? acc_rate : decc_rate;
             //float move = Mathf.Pow(Mathf.Abs(spdf) * rate , movepow) * Mathf.Sign(spdf);
@@ -89,6 +95,11 @@ public class rat_movement : MonoBehaviour
             }
             GroundTime -= Time.deltaTime;
             PressTime -= Time.deltaTime;
+        }
+        if (Grabbed)
+        {
+            rb_rat.AddForce(Vector2.up * moveAxisY * speed);
+
         }
     }
     public void Die()
