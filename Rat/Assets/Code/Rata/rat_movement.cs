@@ -5,6 +5,7 @@ using UnityEngine;
 public class rat_movement : MonoBehaviour
 {
     public rat_holes r_hole;
+    public rat_raycast r_cast;
     Rigidbody2D rb_rat;
     public int speed; //Velocidad maxima que puede alcanzar la rata
     public int jumpforce; //La fuerza del salto de la rata
@@ -17,7 +18,7 @@ public class rat_movement : MonoBehaviour
     public float acc_rate; //Cuanto mas alto, mas rapido acelera
     public float decc_rate;  //Cuanto mas alto, mas rapido desacelera
     public float movepow; //La aceleracion se eleva a este numero, para que tarde menos en llegar a velocidades mas altas
-    public bool grounded; //Si esta tocando el suelo o no
+    //public bool grounded; //Si esta tocando el suelo o no
     public KeyCode jump_key; //La tecla de salto
     public KeyCode action_key; //La tecla de interactuar (cadenas, agujeros)
     public bool visible; //Si la pueden ver los enemigos o no
@@ -27,7 +28,6 @@ public class rat_movement : MonoBehaviour
     float GroundTime;
     public bool hidden; //Si esta escondida en un agujero o no
     public bool Grabbed; //Si esta agarrada a una cadena
-    [SerializeField] LayerMask groundlayer;
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "Floor")
@@ -45,6 +45,8 @@ public class rat_movement : MonoBehaviour
     }
     void Start()
     {
+        QualitySettings.vSyncCount = 0;
+        Application.targetFrameRate = 6;
         rb_rat = GetComponent<Rigidbody2D>();
         Grabbed = false;
     }
@@ -67,12 +69,11 @@ public class rat_movement : MonoBehaviour
             float sptrg = speed * moveAxisX;
             float spdf = sptrg - rb_rat.velocity.x;
             float rate = (Mathf.Abs(spdf) > 0.01) ? acc_rate : decc_rate;
-            //float move = Mathf.Pow(Mathf.Abs(spdf) * rate , movepow) * Mathf.Sign(spdf);
-            float move = spdf * rate;
+            float move = Mathf.Pow(Mathf.Abs(spdf) * rate , movepow) * Mathf.Sign(spdf);
+            //float move = spdf * rate;
             rb_rat.AddForce(Vector2.right * move * slowdown);
-            grounded = Physics2D.Raycast(transform.position, Vector2.down, 0.5f, groundlayer);
             //Mathf.max
-            if (grounded && rb_rat.velocity.y <= 0.5)
+            if (r_cast.grounded && rb_rat.velocity.y <= 0.5)
             {
                 GroundTime = GroundTimeSet;
             }

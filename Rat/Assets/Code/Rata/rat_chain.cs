@@ -24,7 +24,7 @@ public class rat_chain : MonoBehaviour
             print("a");
             canGrab = false;
             chain = collision.gameObject;
-            r_move.gravity = 3;
+            r_move.gravity = 4;
             r_move.Grabbed = false;
             rb_rat.velocity = new Vector2(rb_rat.velocity.x, rb_rat.velocity.y / 2);
         }
@@ -38,10 +38,11 @@ public class rat_chain : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(action_key))
+        if (Input.GetKeyDown(action_key) && canGrab)
         {
             r_move.gravity = 0;
             r_move.Grabbed = true;
+            transform.position = new Vector2(chain.transform.position.x, transform.position.y);
         }
     }
 }
