@@ -46,7 +46,7 @@ public class rat_movement : MonoBehaviour
     void Start()
     {
         QualitySettings.vSyncCount = 0;
-        Application.targetFrameRate = 6;
+        Application.targetFrameRate = 60;
         rb_rat = GetComponent<Rigidbody2D>();
         Grabbed = false;
     }
@@ -71,7 +71,14 @@ public class rat_movement : MonoBehaviour
             float rate = (Mathf.Abs(spdf) > 0.01) ? acc_rate : decc_rate;
             float move = Mathf.Pow(Mathf.Abs(spdf) * rate , movepow) * Mathf.Sign(spdf);
             //float move = spdf * rate;
-            rb_rat.AddForce(Vector2.right * move * slowdown);
+            if (moveAxisX > 0 && r_cast.rightwall || moveAxisX < 0 && r_cast.leftwall)
+            {
+                print("waka");
+            }
+            else
+            {
+                rb_rat.AddForce(Vector2.right * move * slowdown);
+            }
             //Mathf.max
             if (r_cast.grounded && rb_rat.velocity.y <= 0.5)
             {

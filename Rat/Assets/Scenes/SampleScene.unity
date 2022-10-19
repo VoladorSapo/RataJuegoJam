@@ -161,7 +161,7 @@ MonoBehaviour:
   r_hole: {fileID: 190405899}
   r_cast: {fileID: 190405901}
   speed: 14
-  jumpforce: 28
+  jumpforce: 30
   fall: 3
   gravity: 4
   slowdown: 1
@@ -342,6 +342,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   grounded: 0
+  leftwall: 0
+  rightwall: 0
 --- !u!1 &336525800
 GameObject:
   m_ObjectHideFlags: 0

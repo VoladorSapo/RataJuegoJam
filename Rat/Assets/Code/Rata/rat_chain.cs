@@ -24,7 +24,7 @@ public class rat_chain : MonoBehaviour
             print("a");
             canGrab = false;
             chain = collision.gameObject;
-            r_move.gravity = 4;
+            r_move.gravity = 3;
             r_move.Grabbed = false;
             rb_rat.velocity = new Vector2(rb_rat.velocity.x, rb_rat.velocity.y / 2);
         }
