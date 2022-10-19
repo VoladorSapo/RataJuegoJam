@@ -86,8 +86,9 @@ public class rat_movement : MonoBehaviour
             }
             if (PressTime > 0 && GroundTime > 0)
             {
-                print("A" + rb_rat.velocity.y);
+                print("A" + transform.position.x);
                 rb_rat.velocity = new Vector2(rb_rat.velocity.x, 0);
+                
                 rb_rat.AddForce(Vector2.up * jumpforce, ForceMode2D.Impulse);
                 slowdown = slowdownjump;
                 GroundTime = 0;
