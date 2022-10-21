@@ -10,10 +10,35 @@ public class EnemyMovement : MonoBehaviour
     public float moveSpeed = 2f; // velocidad de movimiento 
     public int waypointIndex = 0; // index actual
     int direction; // 1 direccion de ida 0 de vuelta
+    private bool enemyDetection;
     private bool enemyStop;
+    public float detectionSeconds;
     public float waitSeconds;
 
-    //
+    void flip()
+    {
+        transform.Rotate(0, 180, 0);
+        return;
+    }
+    IEnumerator enemyDetectionCo()
+    {
+        enemyDetection = true;
+        yield return new WaitForSeconds(detectionSeconds);
+        enemyDetection = false;
+    }
+    IEnumerator enemyStopWaitCo()
+    {
+        enemyStop = true;
+        yield return new WaitForSeconds(waitSeconds);
+        enemyStop = false;
+        flip();
+    }
+    public void stopEnemy()
+    {
+        StartCoroutine(enemyDetectionCo());
+    }
+    
+    
     private void Awake()
     {
         direction = 1;
@@ -29,58 +54,54 @@ public class EnemyMovement : MonoBehaviour
         direction = 1;
         objective = waypoints[1];
     }
-    public void stopEnemy()
-    {
-        StartCoroutine(enemyStopCo());
-    }
-    IEnumerator enemyStopCo()
-    {
-        enemyStop = true;
-        yield return new WaitForSeconds(waitSeconds);
-        enemyStop = false;
-    }
+    
 
     // Update is called once per frame
     private void Update()
     {
         Vector2 dir = objective.position - transform.position;
-        transform.Translate(dir.normalized * moveSpeed * Time.deltaTime, Space.World);
-        if (!enemyStop) { transform.Translate(dir.normalized * moveSpeed * Time.deltaTime, Space.World); }
+        if (!enemyDetection && !enemyStop) { transform.Translate(dir.normalized * moveSpeed * Time.deltaTime, Space.World); }
         if (Vector2.Distance(transform.position, objective.position) <= 0.05f)
         {
             NextWayPoint();
         }
         if (waypoints.Length == waypointIndex - 1)
         {
+          
             objective = waypoints[waypoints.Length - 1];
+            StartCoroutine(enemyStopWaitCo());
             direction = 0;
             waypointIndex = waypoints.Length - 1;
+            
         }
         if (waypointIndex == -1)
         {
             objective = waypoints[1];
+            StartCoroutine(enemyStopWaitCo());
             direction = 1;
             waypointIndex = 1;
+            
         }
     }
-    private void NextWayPoint()
-    {
-        if (direction == 1)
-        {
-            waypointIndex++;
-            if (waypointIndex - 1 != waypoints.Length)
+    private void NextWayPoint(){ 
+        
+            if (direction == 1)
             {
-                objective = waypoints[waypointIndex];
-            }
+                waypointIndex++;
+                if (waypointIndex - 1 != waypoints.Length)
+                {
+                    objective = waypoints[waypointIndex];
+                }
 
-        }
-        else if (direction == 0)
-        {
-            waypointIndex--;
-            if (waypointIndex != -1)
+            }
+            else if (direction == 0)
             {
-                objective = waypoints[waypointIndex];
+                waypointIndex--;
+                if (waypointIndex != -1)
+                {
+                    objective = waypoints[waypointIndex];
+                }
             }
         }
-    }
+    
 }
