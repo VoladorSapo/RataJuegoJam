@@ -30,6 +30,7 @@ public class rat_movement : MonoBehaviour
     public bool Grabbed; //Si esta agarrada a una cadena
     public float slopeAngle;
     public bool onSlope;
+    public int negativeslope;
     Vector2 forceangle;
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -75,7 +76,6 @@ public class rat_movement : MonoBehaviour
             float move = Mathf.Pow(Mathf.Abs(spdf) * rate , movepow) * Mathf.Sign(spdf);
             //float move = spdf * rate;
             forceangle = new Vector2(Mathf.Cos(slopeAngle * Mathf.PI / 180), Mathf.Sin(slopeAngle * Mathf.PI / 180));
-            print(forceangle);
             //if (moveAxisX > 0 && r_cast.rightwall || moveAxisX < 0 && r_cast.leftwall)
             //{
             //    print("waka");
@@ -107,11 +107,13 @@ public class rat_movement : MonoBehaviour
             }
             if (slopeAngle != 0)
             {
-                //rb_rat.gravityScale = 0;
-                Vector2 normalangle = new Vector2(forceangle.y, forceangle.x);
-                Debug.DrawRay(transform.position, -normalangle, Color.green);
-                //rb_rat.AddForce(-normalangle * gravity * rb_rat.gravityScale);
+                rb_rat.gravityScale = 0;
+                Vector2 normalangle = new Vector2(forceangle.y * negativeslope, -forceangle.x );
+                Debug.DrawRay(transform.position, normalangle, Color.green);
+                rb_rat.AddForce(normalangle * gravity * 14);
             }
+            else
+            {
                 if (rb_rat.velocity.y < 0)
                 {
                     rb_rat.gravityScale = gravity * fall;
@@ -120,6 +122,7 @@ public class rat_movement : MonoBehaviour
                 {
                     rb_rat.gravityScale = gravity;
                 }
+            }
             GroundTime -= Time.deltaTime;
             PressTime -= Time.deltaTime;
         }

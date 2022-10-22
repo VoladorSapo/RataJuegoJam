@@ -44,16 +44,20 @@ public class rat_raycast : MonoBehaviour
         leftwall = (rc_left_up || rc_left_down); ;
         print(leftwall);
         grounded = (rc_down_left || rc_down_mid || rc_down_right);
-        if (rc_down_mid.collider)
-        {
-            Debug.LogWarning("Yes");
-        }
         if (rc_down_mid && Vector2.Angle(rc_down_mid.normal, Vector2.up) != 0)
         {
             r_move.onSlope = true;
-            print("onSlope");
         }
+        print(rc_down_mid.normal.x);
         r_move.slopeAngle = Vector2.Angle(rc_down_mid.normal, Vector2.up);
+        if(rc_down_mid.normal.x > 0)
+        {
+            r_move.negativeslope = -1;
+        }
+        else
+        {
+            r_move.negativeslope = 1;
+        }
         //sprite.transform.localEulerAngles = new Vector3(0, 0, -r_move.slopeAngle);
     }
 }
