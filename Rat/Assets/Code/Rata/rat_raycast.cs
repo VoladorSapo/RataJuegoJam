@@ -16,6 +16,7 @@ public class rat_raycast : MonoBehaviour
     public bool grounded;
     public bool leftwall;
     public bool rightwall;
+    public GameObject sprite;
     // Start is called before the first frame update
     void Start()
     {
@@ -25,11 +26,11 @@ public class rat_raycast : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        rc_down_mid = Physics2D.Raycast(transform.position, Vector2.down, 0.5f, groundlayer);
+        rc_down_mid = Physics2D.Raycast(transform.position, Vector2.down, 1f, groundlayer);
         Debug.DrawRay(transform.position, Vector2.down, Color.red);
-        rc_down_right = Physics2D.Raycast(transform.position + new Vector3(0.5f, 0), Vector2.down, 0.5f, groundlayer);
+        rc_down_right = Physics2D.Raycast(transform.position + new Vector3(0.5f, 0), Vector2.down,1f, groundlayer);
         Debug.DrawRay(transform.position + new Vector3(0.5f, 0), Vector2.down, Color.red);
-        rc_down_left = Physics2D.Raycast(transform.position + new Vector3(-0.5f, 0), Vector2.down, 0.5f, groundlayer);
+        rc_down_left = Physics2D.Raycast(transform.position + new Vector3(-0.5f, 0), Vector2.down, 1f, groundlayer);
         Debug.DrawRay(transform.position + new Vector3(-0.5f, 0), Vector2.down, Color.red);
         rc_right_up = Physics2D.Raycast(transform.position + new Vector3(0.5f, 0.2f), Vector2.right, 0.5f, groundlayer);
         Debug.DrawRay(transform.position + new Vector3(0.5f, 0.2f), Vector2.right, Color.red);
@@ -43,12 +44,16 @@ public class rat_raycast : MonoBehaviour
         leftwall = (rc_left_up || rc_left_down); ;
         print(leftwall);
         grounded = (rc_down_left || rc_down_mid || rc_down_right);
-        if (rc_down_mid && Vector2.Angle(rc_down_left.normal, Vector2.up) != 0)
+        if (rc_down_mid.collider)
+        {
+            Debug.LogWarning("Yes");
+        }
+        if (rc_down_mid && Vector2.Angle(rc_down_mid.normal, Vector2.up) != 0)
         {
             r_move.onSlope = true;
             print("onSlope");
         }
-        r_move.slopeAngle = Vector2.Angle(rc_down_left.normal, Vector2.up);
-        transform.eulerAngles = new Vector3(0, 0, -r_move.slopeAngle); ;
+        r_move.slopeAngle = Vector2.Angle(rc_down_mid.normal, Vector2.up);
+        //sprite.transform.localEulerAngles = new Vector3(0, 0, -r_move.slopeAngle);
     }
 }

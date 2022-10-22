@@ -74,9 +74,12 @@ public class rat_movement : MonoBehaviour
             float rate = (Mathf.Abs(spdf) > 0.01) ? acc_rate : decc_rate;
             float move = Mathf.Pow(Mathf.Abs(spdf) * rate , movepow) * Mathf.Sign(spdf);
             //float move = spdf * rate;
-
             forceangle = new Vector2(Mathf.Cos(slopeAngle * Mathf.PI / 180), Mathf.Sin(slopeAngle * Mathf.PI / 180));
             print(forceangle);
+            //if (moveAxisX > 0 && r_cast.rightwall || moveAxisX < 0 && r_cast.leftwall)
+            //{
+            //    print("waka");
+            //}
             Debug.DrawRay(transform.position, forceangle,Color.blue);
             rb_rat.AddForce(forceangle * move * slowdown);
             //if (moveAxisX > 0 && r_cast.rightwall || moveAxisX < 0 && r_cast.leftwall)
@@ -104,22 +107,19 @@ public class rat_movement : MonoBehaviour
             }
             if (slopeAngle != 0)
             {
-                rb_rat.gravityScale = 0;
+                //rb_rat.gravityScale = 0;
                 Vector2 normalangle = new Vector2(forceangle.y, forceangle.x);
-                Debug.DrawRay(transform.position, -normalangle,Color.green);
-                rb_rat.AddForce(-normalangle * gravity * rb_rat.gravityScale);
+                Debug.DrawRay(transform.position, -normalangle, Color.green);
+                //rb_rat.AddForce(-normalangle * gravity * rb_rat.gravityScale);
             }
-            else
-            {
                 if (rb_rat.velocity.y < 0)
                 {
-                    //rb_rat.gravityScale = gravity * fall;
+                    rb_rat.gravityScale = gravity * fall;
                 }
                 else
                 {
-                    //rb_rat.gravityScale = gravity;
+                    rb_rat.gravityScale = gravity;
                 }
-            }
             GroundTime -= Time.deltaTime;
             PressTime -= Time.deltaTime;
         }
