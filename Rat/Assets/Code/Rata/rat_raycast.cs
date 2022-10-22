@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class rat_raycast : MonoBehaviour
 {
+    public rat_movement r_move;
     RaycastHit2D rc_down_left;
     RaycastHit2D rc_down_mid;
     RaycastHit2D rc_down_right;
@@ -42,5 +43,12 @@ public class rat_raycast : MonoBehaviour
         leftwall = (rc_left_up || rc_left_down); ;
         print(leftwall);
         grounded = (rc_down_left || rc_down_mid || rc_down_right);
+        if (rc_down_mid && Vector2.Angle(rc_down_left.normal, Vector2.up) != 0)
+        {
+            r_move.onSlope = true;
+            print("onSlope");
+        }
+        r_move.slopeAngle = Vector2.Angle(rc_down_left.normal, Vector2.up);
+        transform.eulerAngles = new Vector3(0, 0, -r_move.slopeAngle); ;
     }
 }
