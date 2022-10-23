@@ -19,7 +19,7 @@ public class EnemyMovement : MonoBehaviour
     public rat_movement r_move;
 
 
-    void flip()
+    public void flip()
     {
         transform.Rotate(0, 180, 0);
         return;
