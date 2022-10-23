@@ -62,13 +62,17 @@ public class rat_movement : MonoBehaviour
         {
             PressTime = PressTimeSet;
         }
+        if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
+        {
+            JustGrabbed = false;
+        }
     }
     // Update is called once per frame
     void FixedUpdate()
     {
         moveAxisX = Input.GetAxisRaw("Horizontal");
         moveAxisY = Input.GetAxisRaw("Vertical");
-
+        
         if (!hidden)
         {
             float sptrg = speed * moveAxisX;
@@ -77,7 +81,7 @@ public class rat_movement : MonoBehaviour
             float move = Mathf.Pow(Mathf.Abs(spdf) * rate , movepow) * Mathf.Sign(spdf);
             //float move = spdf * rate;
             forceangle = new Vector2( negativeslope * Mathf.Cos(slopeAngle * Mathf.PI / 180), Mathf.Sin(slopeAngle * Mathf.PI / 180));
-            if (moveAxisX > 0 && r_cast.rightwall && !onSlope && !JustGrabbed|| moveAxisX < 0 && r_cast.leftwall && !onSlope && !JustGrabbed)
+            if (moveAxisX > 0 && r_cast.rightwall && !onSlope|| JustGrabbed|| moveAxisX < 0 && r_cast.leftwall && !onSlope)
             {
                 print("waka");
             }
@@ -87,15 +91,6 @@ public class rat_movement : MonoBehaviour
                 Debug.DrawRay(transform.position, forceangle, Color.blue);
                 rb_rat.AddForce(forceangle * move * slowdown);
             }
-            //if (moveAxisX > 0 && r_cast.rightwall || moveAxisX < 0 && r_cast.leftwall)
-            //{
-            //    print("waka");
-            //}
-            //else
-            //{
-            //    forceangle = new Vector2(Mathf.Cos(slopeAngle * Mathf.PI / 180), Mathf.Sin(slopeAngle * Mathf.PI / 180));
-            //    rb_rat.AddForce(forceangle * move * slowdown);
-            //}
             if (r_cast.grounded && rb_rat.velocity.y <= 0.5 || r_cast.grounded && onSlope)
             {
                 GroundTime = GroundTimeSet;
