@@ -11,11 +11,13 @@ public class EnemyMovement : MonoBehaviour
     public int waypointIndex = 0; // index actual
     int direction; // 1 direccion de ida 0 de vuelta
     private bool enemyDetection;
+    public bool enemyKill;
     private bool enemyStop;
     public float detectionSeconds;
     public float waitSeconds;
     public GameObject player;
-    
+    public rat_movement r_move;
+
 
     void flip()
     {
@@ -25,7 +27,10 @@ public class EnemyMovement : MonoBehaviour
     IEnumerator enemyDetectionCo()
     {
         enemyDetection = true;
+        enemyKill = true;
         yield return new WaitForSeconds(detectionSeconds);
+        IsKill();
+        Debug.Log("a");
     }
     IEnumerator enemyStopWaitCo()
     {
@@ -34,21 +39,27 @@ public class EnemyMovement : MonoBehaviour
         enemyStop = false;
         flip();
     }
-    public void KillSequence()
-    {
-        
-    }
+
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        enemyDetectionCo();
-        if (enemyDetection == true)
+        if (!r_move.hidden)
         {
-            Debug.Log("muerte");
+            Debug.Log("detectado"); 
+            StartCoroutine(enemyDetectionCo());
+        }
+    }
+    private void IsKill()
+    {
+        if (enemyKill == true)
+        {
+            Debug.Log("muerte");//morir
         }
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
         enemyDetection = false;
+        enemyKill = false;
         StopCoroutine(enemyDetectionCo());
     }
 
@@ -67,7 +78,7 @@ public class EnemyMovement : MonoBehaviour
         direction = 1;
         objective = waypoints[1];
     }
-    
+
 
     // Update is called once per frame
     private void Update()
@@ -80,12 +91,12 @@ public class EnemyMovement : MonoBehaviour
         }
         if (waypoints.Length == waypointIndex - 1)
         {
-          
+
             objective = waypoints[waypoints.Length - 1];
             StartCoroutine(enemyStopWaitCo());
             direction = 0;
             waypointIndex = waypoints.Length - 1;
-            
+
         }
         if (waypointIndex == -1)
         {
@@ -93,28 +104,29 @@ public class EnemyMovement : MonoBehaviour
             StartCoroutine(enemyStopWaitCo());
             direction = 1;
             waypointIndex = 1;
-            
+
         }
     }
-    private void NextWayPoint(){ 
-        
-            if (direction == 1)
-            {
-                waypointIndex++;
-                if (waypointIndex - 1 != waypoints.Length)
-                {
-                    objective = waypoints[waypointIndex];
-                }
+    private void NextWayPoint()
+    {
 
-            }
-            else if (direction == 0)
+        if (direction == 1)
+        {
+            waypointIndex++;
+            if (waypointIndex - 1 != waypoints.Length)
             {
-                waypointIndex--;
-                if (waypointIndex != -1)
-                {
-                    objective = waypoints[waypointIndex];
-                }
+                objective = waypoints[waypointIndex];
+            }
+
+        }
+        else if (direction == 0)
+        {
+            waypointIndex--;
+            if (waypointIndex != -1)
+            {
+                objective = waypoints[waypointIndex];
             }
         }
-    
+    }
+
 }

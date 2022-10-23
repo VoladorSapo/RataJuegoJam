@@ -20,6 +20,10 @@ public class rat_holes : MonoBehaviour
             hidenpos = collision.transform.position;
             currentpaths = collision.GetComponentInParent<hole_paths>();
             currenthole = System.Array.IndexOf(currentpaths.holes, collision.gameObject);
+            if (r_move.hidden)
+            {
+                currentpaths.ChangeHole(currenthole);
+            }
         }
     }
     private void OnTriggerExit2D(Collider2D collision)
@@ -46,12 +50,16 @@ public class rat_holes : MonoBehaviour
                 rb_rat.velocity = Vector2.zero;
                 r_move.hidden = true;
                 MoveHole(hidenpos);
+                currentpaths.ChangeHole(currenthole);
                 rb_rat.isKinematic = true;
+                //this.GetComponent<SpriteRenderer>().enabled = 
             }
             else
             {
                 rb_rat.isKinematic = false;
                 r_move.hidden = false;
+                currentpaths.LeaveHole();
+
             }
         }
         if (r_move.hidden)
