@@ -42,7 +42,9 @@ public class rat_chain : MonoBehaviour
         {
             r_move.gravity = 0;
             r_move.Grabbed = true;
+            r_move.JustGrabbed = true;
             transform.position = new Vector2(chain.transform.position.x, transform.position.y);
+            rb_rat.velocity = Vector3.zero;
         }
     }
 }

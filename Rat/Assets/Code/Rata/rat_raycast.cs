@@ -42,13 +42,15 @@ public class rat_raycast : MonoBehaviour
         rc_left_down = Physics2D.Raycast(transform.position + new Vector3(-0.5f, -0.2f), Vector2.left, 0.5f, groundlayer);
         Debug.DrawRay(transform.position + new Vector3(-0.5f, -0.2f), Vector2.left, Color.red);
         leftwall = (rc_left_up || rc_left_down); ;
-        print(leftwall);
         grounded = (rc_down_left || rc_down_mid || rc_down_right);
         if (rc_down_mid && Vector2.Angle(rc_down_mid.normal, Vector2.up) != 0)
         {
             r_move.onSlope = true;
         }
-        print(rc_down_mid.normal.x);
+        else
+        {
+            r_move.onSlope = false;
+        }
         r_move.slopeAngle = Vector2.Angle(rc_down_mid.normal, Vector2.up);
         if(rc_down_mid.normal.x > 0)
         {
@@ -58,6 +60,6 @@ public class rat_raycast : MonoBehaviour
         {
             r_move.negativeslope = 1;
         }
-        //sprite.transform.localEulerAngles = new Vector3(0, 0, -r_move.slopeAngle);
+        //sprite.transform.x
     }
 }
