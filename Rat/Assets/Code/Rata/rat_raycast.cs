@@ -26,11 +26,11 @@ public class rat_raycast : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        rc_down_mid = Physics2D.Raycast(transform.position, Vector2.down, 1f, groundlayer);
+        rc_down_mid = Physics2D.Raycast(transform.position, Vector2.down, 1.5f, groundlayer);
         Debug.DrawRay(transform.position, Vector2.down, Color.red);
-        rc_down_right = Physics2D.Raycast(transform.position + new Vector3(0.5f, 0), Vector2.down,1f, groundlayer);
+        rc_down_right = Physics2D.Raycast(transform.position + new Vector3(0.5f, 0), Vector2.down,1.5f, groundlayer);
         Debug.DrawRay(transform.position + new Vector3(0.5f, 0), Vector2.down, Color.red);
-        rc_down_left = Physics2D.Raycast(transform.position + new Vector3(-0.5f, 0), Vector2.down, 1f, groundlayer);
+        rc_down_left = Physics2D.Raycast(transform.position + new Vector3(-0.5f, 0), Vector2.down, 1.5f, groundlayer);
         Debug.DrawRay(transform.position + new Vector3(-0.5f, 0), Vector2.down, Color.red);
         rc_right_up = Physics2D.Raycast(transform.position + new Vector3(0.5f, 0.2f), Vector2.right, 0.5f, groundlayer);
         Debug.DrawRay(transform.position + new Vector3(0.5f, 0.2f), Vector2.right, Color.red);
@@ -43,16 +43,17 @@ public class rat_raycast : MonoBehaviour
         Debug.DrawRay(transform.position + new Vector3(-0.5f, -0.2f), Vector2.left, Color.red);
         leftwall = (rc_left_up || rc_left_down); ;
         grounded = (rc_down_left || rc_down_mid || rc_down_right);
-        if (rc_down_mid && Vector2.Angle(rc_down_mid.normal, Vector2.up) != 0)
+        if (rc_down_right && Vector2.Angle(rc_down_right.normal, Vector2.up) != 0)
         {
+            print("Jaaaa");
             r_move.onSlope = true;
         }
         else
         {
             r_move.onSlope = false;
         }
-        r_move.slopeAngle = Vector2.Angle(rc_down_mid.normal, Vector2.up);
-        if(rc_down_mid.normal.x > 0)
+        r_move.slopeAngle = Vector2.Angle(rc_down_right.normal, Vector2.up);
+        if(rc_down_right.normal.x > 0)
         {
             r_move.negativeslope = -1;
         }

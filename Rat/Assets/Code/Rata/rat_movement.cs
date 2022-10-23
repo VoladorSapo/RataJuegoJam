@@ -18,7 +18,7 @@ public class rat_movement : MonoBehaviour
     public float acc_rate; //Cuanto mas alto, mas rapido acelera
     public float decc_rate;  //Cuanto mas alto, mas rapido desacelera
     public float movepow; //La aceleracion se eleva a este numero, para que tarde menos en llegar a velocidades mas altas
-    //public bool grounded; //Si esta tocando el suelo o no
+    public bool grounded; //Si esta tocando el suelo o no
     public KeyCode jump_key; //La tecla de salto
     public KeyCode action_key; //La tecla de interactuar (cadenas, agujeros)
     public bool visible; //Si la pueden ver los enemigos o no
@@ -34,6 +34,7 @@ public class rat_movement : MonoBehaviour
     public int negativeslope;
     public Vector2 RespawnPoint;
     Vector2 forceangle;
+    SpriteRenderer _renderer;
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "Floor")
@@ -54,6 +55,7 @@ public class rat_movement : MonoBehaviour
         QualitySettings.vSyncCount = 0;
         Application.targetFrameRate = 60;
         rb_rat = GetComponent<Rigidbody2D>();
+        _renderer = GetComponent<SpriteRenderer>();
         Grabbed = false;
     }
     private void Update()
@@ -72,7 +74,14 @@ public class rat_movement : MonoBehaviour
     {
         moveAxisX = Input.GetAxisRaw("Horizontal");
         moveAxisY = Input.GetAxisRaw("Vertical");
-        
+        if(moveAxisX > 0)
+        {
+            _renderer.flipX = true;
+        }
+        if(moveAxisX < 0)
+        {
+            _renderer.flipX = false;
+        }
         if (!hidden)
         {
             float sptrg = speed * moveAxisX;
@@ -93,6 +102,7 @@ public class rat_movement : MonoBehaviour
             }
             if (r_cast.grounded && rb_rat.velocity.y <= 0.5 || r_cast.grounded && onSlope)
             {
+                print("hey");
                 GroundTime = GroundTimeSet;
             }
             if (PressTime > 0 && GroundTime > 0)

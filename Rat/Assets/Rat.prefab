@@ -115,6 +115,7 @@ MonoBehaviour:
   acc_rate: 1.2
   decc_rate: 2
   movepow: 2
+  grounded: 0
   jump_key: 32
   action_key: 101
   visible: 0
