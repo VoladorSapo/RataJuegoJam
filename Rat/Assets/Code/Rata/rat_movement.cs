@@ -28,6 +28,10 @@ public class rat_movement : MonoBehaviour
     float GroundTime;
     public bool hidden; //Si esta escondida en un agujero o no
     public bool Grabbed; //Si esta agarrada a una cadena
+    public float slopeAngle;
+    public bool onSlope;
+    public int negativeslope;
+    Vector2 forceangle;
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "Floor")
@@ -71,15 +75,22 @@ public class rat_movement : MonoBehaviour
             float rate = (Mathf.Abs(spdf) > 0.01) ? acc_rate : decc_rate;
             float move = Mathf.Pow(Mathf.Abs(spdf) * rate , movepow) * Mathf.Sign(spdf);
             //float move = spdf * rate;
-            if (moveAxisX > 0 && r_cast.rightwall || moveAxisX < 0 && r_cast.leftwall)
-            {
-                print("waka");
-            }
-            else
-            {
-                rb_rat.AddForce(Vector2.right * move * slowdown);
-            }
-            //Mathf.max
+            forceangle = new Vector2(Mathf.Cos(slopeAngle * Mathf.PI / 180), Mathf.Sin(slopeAngle * Mathf.PI / 180));
+            //if (moveAxisX > 0 && r_cast.rightwall || moveAxisX < 0 && r_cast.leftwall)
+            //{
+            //    print("waka");
+            //}
+            Debug.DrawRay(transform.position, forceangle,Color.blue);
+            rb_rat.AddForce(forceangle * move * slowdown);
+            //if (moveAxisX > 0 && r_cast.rightwall || moveAxisX < 0 && r_cast.leftwall)
+            //{
+            //    print("waka");
+            //}
+            //else
+            //{
+            //    forceangle = new Vector2(Mathf.Cos(slopeAngle * Mathf.PI / 180), Mathf.Sin(slopeAngle * Mathf.PI / 180));
+            //    rb_rat.AddForce(forceangle * move * slowdown);
+            //}
             if (r_cast.grounded && rb_rat.velocity.y <= 0.5)
             {
                 GroundTime = GroundTimeSet;
@@ -94,13 +105,23 @@ public class rat_movement : MonoBehaviour
                 GroundTime = 0;
                 PressTime = 0;
             }
-            if (rb_rat.velocity.y < 0)
+            if (slopeAngle != 0)
             {
-                rb_rat.gravityScale = gravity * fall;
+                rb_rat.gravityScale = 0;
+                Vector2 normalangle = new Vector2(forceangle.y * negativeslope, -forceangle.x );
+                Debug.DrawRay(transform.position, normalangle, Color.green);
+                rb_rat.AddForce(normalangle * gravity * 14);
             }
             else
             {
-                rb_rat.gravityScale = gravity;
+                if (rb_rat.velocity.y < 0)
+                {
+                    rb_rat.gravityScale = gravity * fall;
+                }
+                else
+                {
+                    rb_rat.gravityScale = gravity;
+                }
             }
             GroundTime -= Time.deltaTime;
             PressTime -= Time.deltaTime;
