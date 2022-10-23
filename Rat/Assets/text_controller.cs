@@ -34,7 +34,7 @@ public class text_controller : MonoBehaviour
             string txt = currenstring[num];
             TextDisplay.enabled = true;
             TextDisplay.text = txt;
-            TextDisplay.color = Color.black;
+            TextDisplay.color = Color.white;
             escribiendo = true;
             terminado = false;
             for (int i = 0; i < txt.ToCharArray().Length; i++)
