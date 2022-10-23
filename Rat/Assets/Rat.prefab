@@ -122,6 +122,11 @@ MonoBehaviour:
   GroundTimeSet: 0.2
   hidden: 0
   Grabbed: 0
+  JustGrabbed: 0
+  slopeAngle: 0
+  onSlope: 0
+  negativeslope: 0
+  RespawnPoint: {x: 0, y: 0}
 --- !u!114 &4944494347104943366
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -168,12 +173,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8536739a412051f45a8f07969904f2e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  r_move: {fileID: 0}
   groundlayer:
     serializedVersion: 2
     m_Bits: 8
   grounded: 0
   leftwall: 0
   rightwall: 0
+  sprite: {fileID: 0}
 --- !u!50 &4944494347104943367
 Rigidbody2D:
   serializedVersion: 4
