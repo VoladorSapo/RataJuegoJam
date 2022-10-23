@@ -14,6 +14,8 @@ public class EnemyMovement : MonoBehaviour
     private bool enemyStop;
     public float detectionSeconds;
     public float waitSeconds;
+    public GameObject player;
+    
 
     void flip()
     {
@@ -24,7 +26,6 @@ public class EnemyMovement : MonoBehaviour
     {
         enemyDetection = true;
         yield return new WaitForSeconds(detectionSeconds);
-        enemyDetection = false;
     }
     IEnumerator enemyStopWaitCo()
     {
@@ -33,12 +34,24 @@ public class EnemyMovement : MonoBehaviour
         enemyStop = false;
         flip();
     }
-    public void stopEnemy()
+    public void KillSequence()
     {
-        StartCoroutine(enemyDetectionCo());
+        
     }
-    
-    
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        enemyDetectionCo();
+        if (enemyDetection == true)
+        {
+            Debug.Log("muerte");
+        }
+    }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        enemyDetection = false;
+        StopCoroutine(enemyDetectionCo());
+    }
+
     private void Awake()
     {
         direction = 1;
