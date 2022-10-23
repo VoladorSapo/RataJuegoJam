@@ -28,9 +28,11 @@ public class rat_movement : MonoBehaviour
     float GroundTime;
     public bool hidden; //Si esta escondida en un agujero o no
     public bool Grabbed; //Si esta agarrada a una cadena
+    public bool JustGrabbed; //Sirve para que tengas que volver a darle a alguna tecla para moverte despues de agarrate a una cadena
     public float slopeAngle;
     public bool onSlope;
     public int negativeslope;
+    public Vector2 RespawnPoint;
     Vector2 forceangle;
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -75,13 +77,16 @@ public class rat_movement : MonoBehaviour
             float move = Mathf.Pow(Mathf.Abs(spdf) * rate , movepow) * Mathf.Sign(spdf);
             //float move = spdf * rate;
             forceangle = new Vector2( negativeslope * Mathf.Cos(slopeAngle * Mathf.PI / 180), Mathf.Sin(slopeAngle * Mathf.PI / 180));
-            //if (moveAxisX > 0 && r_cast.rightwall || moveAxisX < 0 && r_cast.leftwall)
-            //{
-            //    print("waka");
-            //}
-            Vector2 daforce = new Vector2(forceangle.x * negativeslope, forceangle.y);
-            Debug.DrawRay(transform.position, forceangle,Color.blue);
-            rb_rat.AddForce(forceangle * move * slowdown);
+            if (moveAxisX > 0 && r_cast.rightwall && !onSlope && !JustGrabbed|| moveAxisX < 0 && r_cast.leftwall && !onSlope && !JustGrabbed)
+            {
+                print("waka");
+            }
+            else
+            {
+                Vector2 daforce = new Vector2(forceangle.x * negativeslope, forceangle.y);
+                Debug.DrawRay(transform.position, forceangle, Color.blue);
+                rb_rat.AddForce(forceangle * move * slowdown);
+            }
             //if (moveAxisX > 0 && r_cast.rightwall || moveAxisX < 0 && r_cast.leftwall)
             //{
             //    print("waka");
@@ -148,7 +153,7 @@ public class rat_movement : MonoBehaviour
     }
     public void Die()
     {
-        transform.position = new Vector3(-17, -3.5f, 0);
+        transform.position = RespawnPoint;
     }
 
 }
