@@ -12,17 +12,26 @@ public class EnemyMovement : MonoBehaviour
     int direction; // 1 direccion de ida 0 de vuelta
     private bool enemyDetection;
     public bool enemyKill;
+    public static bool ratDead;
     private bool enemyStop;
     public float detectionSeconds;
     public float waitSeconds;
     public GameObject player;
     public rat_movement r_move;
+    public Vector2 RespawnPoint;
+
+
 
 
     public void flip()
     {
         transform.Rotate(0, 180, 0);
         return;
+    }
+    public void Die()
+    {
+        transform.position = RespawnPoint;
+        ratDead = false;
     }
     public IEnumerator enemyDetectionCo()
     {
@@ -54,7 +63,8 @@ public class EnemyMovement : MonoBehaviour
     {
         if (enemyKill == true)
         {
-            Debug.Log("muerte");//morir
+            ratDead = true;
+            Debug.Log("dead");
             
         }
     }
@@ -67,6 +77,7 @@ public class EnemyMovement : MonoBehaviour
 
     private void Awake()
     {
+        ratDead = false;
         direction = 1;
         waypoints = new Transform[waypointsGO.childCount];
         for (int i = 0; i < waypoints.Length; i++)
@@ -85,28 +96,36 @@ public class EnemyMovement : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        Vector2 dir = objective.position - transform.position;
-        if (!enemyDetection && !enemyStop) { transform.Translate(dir.normalized * moveSpeed * Time.deltaTime, Space.World); }
-        if (Vector2.Distance(transform.position, objective.position) <= 0.05f)
+        if (!ratDead)
         {
-            NextWayPoint();
+            Vector2 dir = objective.position - transform.position;
+            if (!enemyDetection && !enemyStop) { transform.Translate(dir.normalized * moveSpeed * Time.deltaTime, Space.World); }
+            if (Vector2.Distance(transform.position, objective.position) <= 0.05f)
+            {
+                NextWayPoint();
+            }
+            if (waypoints.Length == waypointIndex - 1)
+            {
+
+                objective = waypoints[waypoints.Length - 1];
+                StartCoroutine(enemyStopWaitCo());
+                direction = 0;
+                waypointIndex = waypoints.Length - 1;
+
+            }
+            if (waypointIndex == -1)
+            {
+                objective = waypoints[1];
+                StartCoroutine(enemyStopWaitCo());
+                direction = 1;
+                waypointIndex = 1;
+
+            }
         }
-        if (waypoints.Length == waypointIndex - 1)
+        if (Input.GetKeyDown(KeyCode.R))
         {
-
-            objective = waypoints[waypoints.Length - 1];
-            StartCoroutine(enemyStopWaitCo());
-            direction = 0;
-            waypointIndex = waypoints.Length - 1;
-
-        }
-        if (waypointIndex == -1)
-        {
-            objective = waypoints[1];
-            StartCoroutine(enemyStopWaitCo());
-            direction = 1;
-            waypointIndex = 1;
-
+            Die();
+            ratDead = true;
         }
     }
     private void NextWayPoint()

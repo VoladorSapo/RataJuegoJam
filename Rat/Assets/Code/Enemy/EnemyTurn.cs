@@ -5,11 +5,16 @@ using UnityEngine;
 public class EnemyTurn : MonoBehaviour
 {
     public float turnSeconds;
-    private bool var =true;
+    public bool var =true;
     public rat_movement r_move;
     public bool enemyDetection;
     public bool enemyKill;
     public int detectionSeconds;
+    public static bool ratDead;
+    private void Awake()
+    {
+        ratDead = false;
+    }
     public void flip()
     {
         transform.Rotate(0, 180, 0);
@@ -43,6 +48,7 @@ public class EnemyTurn : MonoBehaviour
         if (enemyKill == true)
         {
             Debug.Log("muerte");//morir
+            ratDead = true;
         }
     }
     private void OnTriggerExit2D(Collider2D collision)
@@ -57,6 +63,6 @@ public class EnemyTurn : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (var) { StartCoroutine(turnAround()); }
+        if (var && !ratDead) { StartCoroutine(turnAround()); }
     }
 }

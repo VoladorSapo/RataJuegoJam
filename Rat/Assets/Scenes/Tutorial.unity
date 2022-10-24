@@ -1239,7 +1239,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 224168856}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -109.05096, y: 4.1638484, z: -11.11}
+  m_LocalPosition: {x: -27.270876, y: 31.583849, z: -11.11}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2227,8 +2227,8 @@ GameObject:
   m_Component:
   - component: {fileID: 442728569}
   - component: {fileID: 442728568}
-  - component: {fileID: 442728571}
   - component: {fileID: 442728570}
+  - component: {fileID: 442728571}
   m_Layer: 0
   m_Name: Rajoy (1)
   m_TagString: Untagged
@@ -2328,14 +2328,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 442728566}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 52e4440530cb3a9479b7a52981c9f76d, type: 3}
+  m_Script: {fileID: 11500000, guid: 5d6be436e29a32e4a8dab4d4a29f1ee0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  turnSeconds: 2
-  r_move: {fileID: 0}
-  enemyDetection: 0
+  waypointsGO: {fileID: 0}
+  moveSpeed: 2
+  waypointIndex: 0
   enemyKill: 0
+  ratDead: 0
   detectionSeconds: 0
+  waitSeconds: 0
+  player: {fileID: 0}
+  r_move: {fileID: 0}
+  RespawnPoint: {x: 0, y: 0}
 --- !u!1001 &463667964
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3445,10 +3450,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   turnSeconds: 0
+  var: 1
   r_move: {fileID: 0}
   enemyDetection: 0
   enemyKill: 0
   detectionSeconds: 0
+  ratDead: 0
 --- !u!1001 &636219220
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3660,10 +3667,12 @@ MonoBehaviour:
   moveSpeed: 8
   waypointIndex: 0
   enemyKill: 0
+  ratDead: 0
   detectionSeconds: 0
   waitSeconds: 1
   player: {fileID: 0}
   r_move: {fileID: 0}
+  RespawnPoint: {x: 0, y: 0}
 --- !u!212 &661560600
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -5283,10 +5292,12 @@ MonoBehaviour:
   moveSpeed: 8
   waypointIndex: 0
   enemyKill: 0
+  ratDead: 0
   detectionSeconds: 0
   waitSeconds: 1
   player: {fileID: 0}
   r_move: {fileID: 0}
+  RespawnPoint: {x: 0, y: 0}
 --- !u!212 &875073356
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -7100,7 +7111,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1317842288}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -109.05096, y: 4.1638484, z: -11.11}
+  m_LocalPosition: {x: -27.270876, y: 31.583849, z: -11.11}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -7291,10 +7302,12 @@ MonoBehaviour:
   moveSpeed: 2
   waypointIndex: 0
   enemyKill: 0
+  ratDead: 0
   detectionSeconds: 0.5
   waitSeconds: 1
   player: {fileID: 1745183178}
   r_move: {fileID: 2065678856}
+  RespawnPoint: {x: 0, y: 0}
 --- !u!212 &1370701844
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -11097,11 +11110,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4944494347104943365, guid: ea646525bda935e408e663f87a181a27, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -111.67
+      value: -29.89
       objectReference: {fileID: 0}
     - target: {fileID: 4944494347104943365, guid: ea646525bda935e408e663f87a181a27, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.16
+      value: 26.26
       objectReference: {fileID: 0}
     - target: {fileID: 4944494347104943365, guid: ea646525bda935e408e663f87a181a27, type: 3}
       propertyPath: m_LocalPosition.z
