@@ -14,6 +14,9 @@ public class text_controller : MonoBehaviour
     public bool finished;
     string[] currenstring;
     public Animator fondo;
+    public AudioSource _audio;
+    public AudioClip start;
+    public AudioClip end;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,11 +24,15 @@ public class text_controller : MonoBehaviour
         intro = new string[2] { "Era se una vez un reino una vez prospero azotado por la peste, es rey karjon son mando a sus temibles medicos de la peste asesinar a todas las ratas de su pais", "For the community" };
         if (finished)
         {
+            _audio.clip = end;
+            _audio.Play();
             fondo.SetInteger("Fondo",3);
             currenstring = intro;
         }
         else
         {
+            _audio.clip = start;
+            _audio.Play();
             fondo.SetInteger("Fondo", 1);
             currenstring = intro;
         }

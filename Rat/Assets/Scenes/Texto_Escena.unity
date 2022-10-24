@@ -284,6 +284,9 @@ MonoBehaviour:
   terminado: 0
   finished: 0
   fondo: {fileID: 5701269}
+  _audio: {fileID: 1836579820}
+  start: {fileID: 8300000, guid: 6b0ac3324ca1086478c5b70ac137e916, type: 3}
+  end: {fileID: 8300000, guid: 91885e619f9dfa54aaf26137029a66d7, type: 3}
 --- !u!114 &25611191
 MonoBehaviour:
   m_ObjectHideFlags: 0
