@@ -24,7 +24,7 @@ public class EnemyMovement : MonoBehaviour
         transform.Rotate(0, 180, 0);
         return;
     }
-    IEnumerator enemyDetectionCo()
+    public IEnumerator enemyDetectionCo()
     {
         enemyDetection = true;
         enemyKill = true;
