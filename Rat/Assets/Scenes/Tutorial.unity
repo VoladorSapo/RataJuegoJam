@@ -148,7 +148,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 19022447}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -8.09, y: 23.82, z: 0}
+  m_LocalPosition: {x: -8.09, y: 24.45, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1239,7 +1239,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 224168856}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.919037, y: 31.223848, z: -11.11}
+  m_LocalPosition: {x: -109.05083, y: 4.1638484, z: -11.11}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2227,7 +2227,8 @@ GameObject:
   m_Component:
   - component: {fileID: 442728569}
   - component: {fileID: 442728568}
-  - component: {fileID: 442728567}
+  - component: {fileID: 442728571}
+  - component: {fileID: 442728570}
   m_Layer: 0
   m_Name: Rajoy (1)
   m_TagString: Untagged
@@ -2235,26 +2236,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &442728567
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 442728566}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5d6be436e29a32e4a8dab4d4a29f1ee0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  waypointsGO: {fileID: 408486667}
-  moveSpeed: 0
-  waypointIndex: 0
-  enemyKill: 0
-  detectionSeconds: 0
-  waitSeconds: 0
-  player: {fileID: 0}
-  r_move: {fileID: 0}
 --- !u!212 &442728568
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2322,6 +2303,39 @@ Transform:
   m_Father: {fileID: 1299647273}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!58 &442728570
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 442728566}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -2, y: 0}
+  serializedVersion: 2
+  m_Radius: 2.0121121
+--- !u!114 &442728571
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 442728566}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52e4440530cb3a9479b7a52981c9f76d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  turnSeconds: 2
+  r_move: {fileID: 0}
+  enemyDetection: 0
+  enemyKill: 0
+  detectionSeconds: 0
 --- !u!1001 &463667964
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2834,7 +2848,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 523228050}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 13.67, y: 23.4, z: 0}
+  m_LocalPosition: {x: 13.67, y: 24.45, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3343,7 +3357,7 @@ GameObject:
   m_Component:
   - component: {fileID: 632747852}
   - component: {fileID: 632747851}
-  - component: {fileID: 632747850}
+  - component: {fileID: 632747853}
   m_Layer: 0
   m_Name: Rajoy (2)
   m_TagString: Untagged
@@ -3351,26 +3365,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &632747850
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 632747849}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5d6be436e29a32e4a8dab4d4a29f1ee0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  waypointsGO: {fileID: 408486667}
-  moveSpeed: 0
-  waypointIndex: 0
-  enemyKill: 0
-  detectionSeconds: 0
-  waitSeconds: 0
-  player: {fileID: 0}
-  r_move: {fileID: 0}
 --- !u!212 &632747851
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3438,6 +3432,23 @@ Transform:
   m_Father: {fileID: 352360539}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &632747853
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 632747849}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52e4440530cb3a9479b7a52981c9f76d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  turnSeconds: 0
+  r_move: {fileID: 0}
+  enemyDetection: 0
+  enemyKill: 0
+  detectionSeconds: 0
 --- !u!1001 &636219220
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7089,7 +7100,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1317842288}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.919037, y: 31.223848, z: -11.11}
+  m_LocalPosition: {x: -109.05083, y: 4.1638484, z: -11.11}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -7344,7 +7355,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1370701842}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.12, y: 1.03, z: 0}
+  m_LocalPosition: {x: -17.69, y: 0.13, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -10958,11 +10969,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4944494347104943365, guid: ea646525bda935e408e663f87a181a27, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3.3
+      value: -111.67
       objectReference: {fileID: 0}
     - target: {fileID: 4944494347104943365, guid: ea646525bda935e408e663f87a181a27, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 25.9
+      value: -1.16
       objectReference: {fileID: 0}
     - target: {fileID: 4944494347104943365, guid: ea646525bda935e408e663f87a181a27, type: 3}
       propertyPath: m_LocalPosition.z

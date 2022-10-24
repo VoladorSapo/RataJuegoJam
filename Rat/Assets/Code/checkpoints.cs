@@ -11,6 +11,7 @@ public class checkpoints : MonoBehaviour
             collision.GetComponent<rat_movement>().RespawnPoint = this.transform.position;
         }
     }
+    
     // Start is called before the first frame update
     void Start()
     {

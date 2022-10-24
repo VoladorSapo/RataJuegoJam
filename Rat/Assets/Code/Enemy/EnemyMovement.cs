@@ -49,11 +49,13 @@ public class EnemyMovement : MonoBehaviour
             StartCoroutine(enemyDetectionCo());
         }
     }
-    private void IsKill()
+    
+    public void IsKill()
     {
         if (enemyKill == true)
         {
             Debug.Log("muerte");//morir
+            
         }
     }
     private void OnTriggerExit2D(Collider2D collision)

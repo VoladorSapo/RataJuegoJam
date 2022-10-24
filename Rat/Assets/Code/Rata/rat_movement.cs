@@ -102,7 +102,7 @@ public class rat_movement : MonoBehaviour
             }
             if (r_cast.grounded && rb_rat.velocity.y <= 0.5 || r_cast.grounded && onSlope)
             {
-                print("hey");
+                
                 GroundTime = GroundTimeSet;
             }
             if (PressTime > 0 && GroundTime > 0)
@@ -155,10 +155,15 @@ public class rat_movement : MonoBehaviour
             rb_rat.freezeRotation = true;
             transform.eulerAngles = Vector3.zero;
         }
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            Die();
+        }
     }
     public void Die()
     {
         transform.position = RespawnPoint;
     }
+    
 
 }
