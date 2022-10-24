@@ -18,10 +18,14 @@ public class EnemyMovement : MonoBehaviour
     public float waitSeconds;
     public GameObject player;
     public rat_movement r_move;
+<<<<<<< HEAD
     public Vector2 RespawnPoint;
 
 
 
+=======
+    Animator _anim;
+>>>>>>> 49e3e20f8008bf84b7caaefe38889970317ebb13
 
     public void flip()
     {
@@ -37,14 +41,17 @@ public class EnemyMovement : MonoBehaviour
     {
         enemyDetection = true;
         enemyKill = true;
+        _anim.SetBool("walk", false);
         yield return new WaitForSeconds(detectionSeconds);
         IsKill();
         Debug.Log("a");
     }
     IEnumerator enemyStopWaitCo()
     {
+        _anim.SetBool("walk", true);
         enemyStop = true;
         yield return new WaitForSeconds(waitSeconds);
+
         enemyStop = false;
         flip();
     }
@@ -88,8 +95,10 @@ public class EnemyMovement : MonoBehaviour
     // Use this for initialization
     private void Start()
     {
+        _anim = GetComponent<Animator>();
         direction = 1;
         objective = waypoints[1];
+        _anim.SetBool("walk", true);
     }
 
 
