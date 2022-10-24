@@ -18,7 +18,7 @@ public class text_controller : MonoBehaviour
     void Start()
     {
         TextDisplay.text = "hello";
-        intro = new string[2] { "Why Mundo do this?", "For the community" };
+        intro = new string[2] { "Era se una vez un reino una vez prospero azotado por la peste, es rey karjon son mando a sus temibles medicos de la peste asesinar a todas las ratas de su pais", "For the community" };
         if (finished)
         {
             fondo.SetInteger("Fondo",3);
