@@ -52,13 +52,14 @@ public class rat_holes : MonoBehaviour
                 MoveHole(hidenpos);
                 currentpaths.ChangeHole(currenthole);
                 rb_rat.isKinematic = true;
-                //this.GetComponent<SpriteRenderer>().enabled = 
+                this.GetComponent<SpriteRenderer>().enabled = false;
             }
             else
             {
                 rb_rat.isKinematic = false;
                 r_move.hidden = false;
                 currentpaths.LeaveHole();
+                this.GetComponent<SpriteRenderer>().enabled = true;
 
             }
         }
