@@ -21,8 +21,8 @@ public class text_controller : MonoBehaviour
     void Start()
     {
         TextDisplay.text = "hello";
-        intro = new string[2] { "Era se una vez un reino una vez prospero azotado por la peste, es rey karjon son mando a sus temibles medicos de la peste asesinar a todas las ratas de su pais", "For the community" };
-        if (finished)
+        intro = new string[9] { "Mas alla de los valles y de las montañas, las leyendas hablan de una ciudad que vio a su gente consumida por el mal de la peste", "Una nube de muerte que se cernio sobre hombres y mujeres por igual","Cuentan que, ingenuo, el rey ordenó a su séquito expulsar de la ciudad a todas las ratas.", "Armados frente a la ponzoña y la inmundicia que emanaba de aquellas bestias, completaron con honor tan ardua tarea.", "Las puertas del castillo se cerraron y el rey regocijó sentado en su trono, pues pensó que se así esquivaría de la muerte negra.", "Pero las plagas nunca mueren… no del todo.", " ¡Álzate, oh, animal de los rincones! Aquel que se llama a sí mismo rey de los hombres espera sentado a la muerte.", "Muéstrale, oh portadora de la enfermedad, lo cerca que están de su cuello los fríos dedos de la peste, y entra en su alcoba para darle muerte.", "Clama tu venganza.Encuentra el camino." };
+        if (FinishClass.finished)
         {
             _audio.clip = end;
             _audio.Play();
@@ -34,7 +34,7 @@ public class text_controller : MonoBehaviour
             _audio.clip = start;
             _audio.Play();
             fondo.SetInteger("Fondo", 1);
-            currenstring = intro;
+            currenstring = outro;
         }
         StartCoroutine(Escribir(0));
     }
@@ -58,7 +58,7 @@ public class text_controller : MonoBehaviour
                     {
                         terminado = true;
                     }
-                    yield return new WaitForSecondsRealtime(0.1f);
+                    yield return new WaitForSecondsRealtime(0.0000000005f);
                 }
                 else
                 {
@@ -70,16 +70,17 @@ public class text_controller : MonoBehaviour
             terminado = true;
         if (num != currenstring.Length - 1)
         {
-            yield return new WaitForSecondsRealtime(1f);
-            StartCoroutine(Escribir(num + 1));
-            if(!finished && num >= 0)
+            yield return new WaitForSecondsRealtime(0.00000000000006f);
+            if (!FinishClass.finished && num >= 0)
             {
+                yield return new WaitForSecondsRealtime(0.000000000000005f);
                 fondo.SetInteger("Fondo", 2);
             }
+            StartCoroutine(Escribir(num + 1));
         }
         else
         {
-            if (finished)
+            if (FinishClass.finished)
             {
                 print("adios");
                 SceneManager.LoadScene(0);

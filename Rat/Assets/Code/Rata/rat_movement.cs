@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 public class rat_movement : MonoBehaviour
 {
     public rat_holes r_hole;
@@ -49,7 +49,11 @@ public class rat_movement : MonoBehaviour
         {
             Die();
         }
-
+        if(collision.gameObject.tag == "End")
+        {
+            FinishClass.finished = true;
+            SceneManager.LoadScene(2);
+        }
     }
     void Start()
     {

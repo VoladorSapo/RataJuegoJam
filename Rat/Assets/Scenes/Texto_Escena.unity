@@ -264,8 +264,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.0012441, y: -189.95}
-  m_SizeDelta: {x: 800, y: 69.94}
+  m_AnchoredPosition: {x: 0, y: -189.95}
+  m_SizeDelta: {x: 780.62, y: 69.94}
   m_Pivot: {x: 0.5, y: 0.5000001}
 --- !u!114 &25611190
 MonoBehaviour:
@@ -307,7 +307,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: New Text
+  m_text: "Mas alla de los valles y de las monta\xF1as, las leyendas hablan de una
+    ciudad que vio a su gente consumida por el mal de la peste."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2c95b6813b647a842a46758b77f0fdef, type: 2}
   m_sharedMaterial: {fileID: 7235106961386553973, guid: 2c95b6813b647a842a46758b77f0fdef, type: 2}
@@ -334,15 +335,15 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 22
+  m_fontSizeBase: 22
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 1
-  m_VerticalAlignment: 256
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0

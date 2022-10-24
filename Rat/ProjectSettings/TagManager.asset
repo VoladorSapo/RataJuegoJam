@@ -8,6 +8,7 @@ TagManager:
   - Damage
   - Hole
   - Cadena
+  - End
   layers:
   - Default
   - TransparentFX
