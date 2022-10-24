@@ -34,6 +34,7 @@ public class rat_movement : MonoBehaviour
     public int negativeslope;
     public Vector2 RespawnPoint;
     Vector2 forceangle;
+    Animator _anim;
     SpriteRenderer _renderer;
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -56,6 +57,7 @@ public class rat_movement : MonoBehaviour
         Application.targetFrameRate = 60;
         rb_rat = GetComponent<Rigidbody2D>();
         _renderer = GetComponent<SpriteRenderer>();
+        _anim = GetComponent<Animator>();
         Grabbed = false;
     }
     private void Update()
@@ -77,10 +79,14 @@ public class rat_movement : MonoBehaviour
         if(moveAxisX > 0)
         {
             _renderer.flipX = true;
-        }
-        if(moveAxisX < 0)
+            _anim.SetInteger("Move", 1);
+        } else if(moveAxisX < 0)
         {
             _renderer.flipX = false;
+            _anim.SetInteger("Move", 1);
+        }
+        else { 
+            _anim.SetInteger("Move", 0);
         }
         if (!hidden)
         {
@@ -102,13 +108,14 @@ public class rat_movement : MonoBehaviour
             }
             if (r_cast.grounded && rb_rat.velocity.y <= 0.5 || r_cast.grounded && onSlope)
             {
-                
+                _anim.SetBool("Jump", false);
                 GroundTime = GroundTimeSet;
             }
             if (PressTime > 0 && GroundTime > 0)
             {
                 rb_rat.velocity = new Vector2(rb_rat.velocity.x, 0);
                 print("jump");
+                _anim.SetBool("Jump", true);
                 rb_rat.AddForce(Vector2.up * jumpforce, ForceMode2D.Impulse);
                 slowdown = slowdownjump;
                 GroundTime = 0;
