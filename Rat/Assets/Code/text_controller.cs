@@ -13,6 +13,7 @@ public class text_controller : MonoBehaviour
     string[] outro;
     public bool finished;
     string[] currenstring;
+    public Animator fondo;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,10 +21,12 @@ public class text_controller : MonoBehaviour
         intro = new string[2] { "Why Mundo do this?", "For the community" };
         if (finished)
         {
+            fondo.SetInteger("Fondo",3);
             currenstring = intro;
         }
         else
         {
+            fondo.SetInteger("Fondo", 1);
             currenstring = intro;
         }
         StartCoroutine(Escribir(0));
@@ -58,22 +61,26 @@ public class text_controller : MonoBehaviour
                 }
             }
             terminado = true;
-        if (num != currenstring.Length)
+        if (num != currenstring.Length - 1)
         {
             yield return new WaitForSecondsRealtime(1f);
             StartCoroutine(Escribir(num + 1));
+            if(!finished && num >= 0)
+            {
+                fondo.SetInteger("Fondo", 2);
+            }
         }
         else
         {
             if (finished)
             {
                 print("adios");
-                //SceneManager.LoadScene(2);
+                SceneManager.LoadScene(0);
             }
             else
             {
                 print("adios");
-                //SceneManager.LoadScene(0);
+                SceneManager.LoadScene(1);
             }
         }
 
