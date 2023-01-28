@@ -59,6 +59,7 @@ public class rat_holes : MonoBehaviour
                 rb_rat.isKinematic = false;
                 r_move.hidden = false;
                 currentpaths.LeaveHole();
+                transform.position = new Vector3(transform.position.x, transform.position.y, -7f);
                 this.GetComponent<SpriteRenderer>().enabled = true;
 
             }

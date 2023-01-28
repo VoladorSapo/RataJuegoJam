@@ -9,7 +9,15 @@ public class EnemyTurn : MonoBehaviour
     public rat_movement r_move;
     public bool enemyDetection;
     public bool enemyKill;
-    public int detectionSeconds;
+    public float detectionSeconds;
+    public GameObject player;
+    Animator _anim;
+    public SpriteRenderer exclamation;
+    private void Start()
+    {
+        exclamation.enabled = false;
+        _anim = GetComponent<Animator>();
+    }
     public void flip()
     {
         transform.Rotate(0, 180, 0);
@@ -17,6 +25,7 @@ public class EnemyTurn : MonoBehaviour
     }
     public IEnumerator enemyDetectionCo()
     {
+        exclamation.enabled = true;
         enemyDetection = true;
         enemyKill = true;
         yield return new WaitForSeconds(detectionSeconds);
@@ -27,7 +36,10 @@ public class EnemyTurn : MonoBehaviour
     {
         var = false;
         yield return new WaitForSeconds(turnSeconds);
-        flip();
+        if (!enemyDetection)
+        {
+            flip();
+        }
         var = true;
     }
     private void OnTriggerEnter2D(Collider2D collision)
@@ -40,13 +52,18 @@ public class EnemyTurn : MonoBehaviour
     }
     private void IsKill()
     {
-        if (enemyKill == true)
+        if (enemyKill && !r_move.hidden)
         {
             Debug.Log("muerte");//morir
+            player.GetComponent<rat_movement>().Die();
+        }
+        else
+        {
         }
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
+        exclamation.enabled = false;
         enemyDetection = false;
         enemyKill = false;
         StopCoroutine(enemyDetectionCo());
@@ -58,5 +75,9 @@ public class EnemyTurn : MonoBehaviour
     void FixedUpdate()
     {
         if (var) { StartCoroutine(turnAround()); }
+        if (r_move.hidden)
+        {
+            enemyDetection = false;
+        }
     }
 }

@@ -17,6 +17,7 @@ public class EnemyMovement : MonoBehaviour
     public float waitSeconds;
     public GameObject player;
     public rat_movement r_move;
+    public SpriteRenderer exclamation;
     Animator _anim;
 
     public void flip()
@@ -26,6 +27,7 @@ public class EnemyMovement : MonoBehaviour
     }
     public IEnumerator enemyDetectionCo()
     {
+        exclamation.enabled = true;
         enemyDetection = true;
         enemyKill = true;
         _anim.SetBool("walk", false);
@@ -38,7 +40,6 @@ public class EnemyMovement : MonoBehaviour
         _anim.SetBool("walk", true);
         enemyStop = true;
         yield return new WaitForSeconds(waitSeconds);
-
         enemyStop = false;
         flip();
     }
@@ -55,17 +56,23 @@ public class EnemyMovement : MonoBehaviour
     
     public void IsKill()
     {
-        if (enemyKill == true)
+        if (enemyKill && !r_move.hidden)
         {
             Debug.Log("muerte");//morir
-            
+            player.GetComponent<rat_movement>().Die();
+        }
+        else
+        {
+            _anim.SetBool("walk", true);
         }
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
+        exclamation.enabled = false;
         enemyDetection = false;
         enemyKill = false;
         StopCoroutine(enemyDetectionCo());
+        _anim.SetBool("walk", true);
     }
 
     private void Awake()
@@ -80,6 +87,7 @@ public class EnemyMovement : MonoBehaviour
     // Use this for initialization
     private void Start()
     {
+        exclamation.enabled = false;
         _anim = GetComponent<Animator>();
         direction = 1;
         objective = waypoints[1];
@@ -112,6 +120,11 @@ public class EnemyMovement : MonoBehaviour
             direction = 1;
             waypointIndex = 1;
 
+        }
+        if (r_move.hidden)
+        {
+            enemyDetection = false;
+            enemyStop = false;
         }
     }
     private void NextWayPoint()

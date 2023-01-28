@@ -45,7 +45,7 @@ public class rat_movement : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Damage")
+        if (collision.gameObject.tag == "Damage" && !hidden)
         {
             Die();
         }
@@ -57,6 +57,7 @@ public class rat_movement : MonoBehaviour
     }
     void Start()
     {
+        transform.position = new Vector3(-134.1f, -2.7f,-7f);
         QualitySettings.vSyncCount = 0;
         Application.targetFrameRate = 60;
         rb_rat = GetComponent<Rigidbody2D>();
@@ -165,10 +166,6 @@ public class rat_movement : MonoBehaviour
         {
             rb_rat.freezeRotation = true;
             transform.eulerAngles = Vector3.zero;
-        }
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            Die();
         }
     }
     public void Die()

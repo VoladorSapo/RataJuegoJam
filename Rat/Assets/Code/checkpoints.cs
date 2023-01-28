@@ -8,7 +8,7 @@ public class checkpoints : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
-            collision.GetComponent<rat_movement>().RespawnPoint = this.transform.position;
+            collision.GetComponent<rat_movement>().RespawnPoint = new Vector3(transform.position.x, transform.position.y, -7);
         }
     }
     
