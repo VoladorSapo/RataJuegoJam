@@ -5,18 +5,15 @@ using UnityEngine;
 public class EnemyTurn : MonoBehaviour
 {
     public float turnSeconds;
-    private bool var =true;
+    public bool var =true;
     public rat_movement r_move;
     public bool enemyDetection;
     public bool enemyKill;
-    public float detectionSeconds;
-    public GameObject player;
-    Animator _anim;
-    public SpriteRenderer exclamation;
-    private void Start()
+    public int detectionSeconds;
+    public static bool ratDead;
+    private void Awake()
     {
-        exclamation.enabled = false;
-        _anim = GetComponent<Animator>();
+        ratDead = false;
     }
     public void flip()
     {
@@ -25,7 +22,6 @@ public class EnemyTurn : MonoBehaviour
     }
     public IEnumerator enemyDetectionCo()
     {
-        exclamation.enabled = true;
         enemyDetection = true;
         enemyKill = true;
         yield return new WaitForSeconds(detectionSeconds);
@@ -36,10 +32,7 @@ public class EnemyTurn : MonoBehaviour
     {
         var = false;
         yield return new WaitForSeconds(turnSeconds);
-        if (!enemyDetection)
-        {
-            flip();
-        }
+        flip();
         var = true;
     }
     private void OnTriggerEnter2D(Collider2D collision)
@@ -52,18 +45,14 @@ public class EnemyTurn : MonoBehaviour
     }
     private void IsKill()
     {
-        if (enemyKill && !r_move.hidden)
+        if (enemyKill == true)
         {
             Debug.Log("muerte");//morir
-            player.GetComponent<rat_movement>().Die();
-        }
-        else
-        {
+            ratDead = true;
         }
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
-        exclamation.enabled = false;
         enemyDetection = false;
         enemyKill = false;
         StopCoroutine(enemyDetectionCo());
@@ -74,10 +63,6 @@ public class EnemyTurn : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (var) { StartCoroutine(turnAround()); }
-        if (r_move.hidden)
-        {
-            enemyDetection = false;
-        }
+        if (var && !ratDead) { StartCoroutine(turnAround()); }
     }
 }

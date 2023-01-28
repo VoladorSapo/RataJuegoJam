@@ -12,22 +12,33 @@ public class EnemyMovement : MonoBehaviour
     int direction; // 1 direccion de ida 0 de vuelta
     private bool enemyDetection;
     public bool enemyKill;
+    public static bool ratDead;
     private bool enemyStop;
     public float detectionSeconds;
     public float waitSeconds;
     public GameObject player;
     public rat_movement r_move;
-    public SpriteRenderer exclamation;
+<<<<<<< HEAD
+    public Vector2 RespawnPoint;
+
+
+
+=======
     Animator _anim;
+>>>>>>> 49e3e20f8008bf84b7caaefe38889970317ebb13
 
     public void flip()
     {
         transform.Rotate(0, 180, 0);
         return;
     }
+    public void Die()
+    {
+        transform.position = RespawnPoint;
+        ratDead = false;
+    }
     public IEnumerator enemyDetectionCo()
     {
-        exclamation.enabled = true;
         enemyDetection = true;
         enemyKill = true;
         _anim.SetBool("walk", false);
@@ -40,6 +51,7 @@ public class EnemyMovement : MonoBehaviour
         _anim.SetBool("walk", true);
         enemyStop = true;
         yield return new WaitForSeconds(waitSeconds);
+
         enemyStop = false;
         flip();
     }
@@ -56,27 +68,23 @@ public class EnemyMovement : MonoBehaviour
     
     public void IsKill()
     {
-        if (enemyKill && !r_move.hidden)
+        if (enemyKill == true)
         {
-            Debug.Log("muerte");//morir
-            player.GetComponent<rat_movement>().Die();
-        }
-        else
-        {
-            _anim.SetBool("walk", true);
+            ratDead = true;
+            Debug.Log("dead");
+            
         }
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
-        exclamation.enabled = false;
         enemyDetection = false;
         enemyKill = false;
         StopCoroutine(enemyDetectionCo());
-        _anim.SetBool("walk", true);
     }
 
     private void Awake()
     {
+        ratDead = false;
         direction = 1;
         waypoints = new Transform[waypointsGO.childCount];
         for (int i = 0; i < waypoints.Length; i++)
@@ -87,7 +95,6 @@ public class EnemyMovement : MonoBehaviour
     // Use this for initialization
     private void Start()
     {
-        exclamation.enabled = false;
         _anim = GetComponent<Animator>();
         direction = 1;
         objective = waypoints[1];
@@ -98,33 +105,36 @@ public class EnemyMovement : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        Vector2 dir = objective.position - transform.position;
-        if (!enemyDetection && !enemyStop) { transform.Translate(dir.normalized * moveSpeed * Time.deltaTime, Space.World); }
-        if (Vector2.Distance(transform.position, objective.position) <= 0.05f)
+        if (!ratDead)
         {
-            NextWayPoint();
-        }
-        if (waypoints.Length == waypointIndex - 1)
-        {
+            Vector2 dir = objective.position - transform.position;
+            if (!enemyDetection && !enemyStop) { transform.Translate(dir.normalized * moveSpeed * Time.deltaTime, Space.World); }
+            if (Vector2.Distance(transform.position, objective.position) <= 0.05f)
+            {
+                NextWayPoint();
+            }
+            if (waypoints.Length == waypointIndex - 1)
+            {
 
-            objective = waypoints[waypoints.Length - 1];
-            StartCoroutine(enemyStopWaitCo());
-            direction = 0;
-            waypointIndex = waypoints.Length - 1;
+                objective = waypoints[waypoints.Length - 1];
+                StartCoroutine(enemyStopWaitCo());
+                direction = 0;
+                waypointIndex = waypoints.Length - 1;
 
-        }
-        if (waypointIndex == -1)
-        {
-            objective = waypoints[1];
-            StartCoroutine(enemyStopWaitCo());
-            direction = 1;
-            waypointIndex = 1;
+            }
+            if (waypointIndex == -1)
+            {
+                objective = waypoints[1];
+                StartCoroutine(enemyStopWaitCo());
+                direction = 1;
+                waypointIndex = 1;
 
+            }
         }
-        if (r_move.hidden)
+        if (Input.GetKeyDown(KeyCode.R))
         {
-            enemyDetection = false;
-            enemyStop = false;
+            Die();
+            ratDead = true;
         }
     }
     private void NextWayPoint()

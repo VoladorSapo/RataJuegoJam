@@ -1026,6 +1026,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1585403943}
   m_CullTransparentMesh: 1
+<<<<<<< HEAD
 --- !u!212 &1585403947
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1122,6 +1123,8 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+=======
+>>>>>>> parent of 2cffbe2 (Merge branch 'main' of https://github.com/VoladorSapo/RataJuegoJam)
 --- !u!1 &1653020087
 GameObject:
   m_ObjectHideFlags: 0

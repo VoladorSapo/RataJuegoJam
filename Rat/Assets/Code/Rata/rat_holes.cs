@@ -52,15 +52,18 @@ public class rat_holes : MonoBehaviour
                 MoveHole(hidenpos);
                 currentpaths.ChangeHole(currenthole);
                 rb_rat.isKinematic = true;
-                this.GetComponent<SpriteRenderer>().enabled = false;
+                //this.GetComponent<SpriteRenderer>().enabled = 
             }
             else
             {
                 rb_rat.isKinematic = false;
                 r_move.hidden = false;
                 currentpaths.LeaveHole();
+<<<<<<< HEAD
                 transform.position = new Vector3(transform.position.x, transform.position.y, -7f);
                 this.GetComponent<SpriteRenderer>().enabled = true;
+=======
+>>>>>>> parent of 2cffbe2 (Merge branch 'main' of https://github.com/VoladorSapo/RataJuegoJam)
 
             }
         }

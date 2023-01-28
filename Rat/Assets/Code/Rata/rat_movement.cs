@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+
 public class rat_movement : MonoBehaviour
 {
     public rat_holes r_hole;
@@ -31,6 +31,7 @@ public class rat_movement : MonoBehaviour
     public bool JustGrabbed; //Sirve para que tengas que volver a darle a alguna tecla para moverte despues de agarrate a una cadena
     public float slopeAngle;
     public bool onSlope;
+    public EnemyMovement ratDead;
     public int negativeslope;
     public Vector2 RespawnPoint;
     Vector2 forceangle;
@@ -45,19 +46,14 @@ public class rat_movement : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Damage" && !hidden)
+        if (collision.gameObject.tag == "Damage")
         {
             Die();
         }
-        if(collision.gameObject.tag == "End")
-        {
-            FinishClass.finished = true;
-            SceneManager.LoadScene(2);
-        }
+
     }
     void Start()
     {
-        transform.position = new Vector3(-134.1f, -2.7f,-7f);
         QualitySettings.vSyncCount = 0;
         Application.targetFrameRate = 60;
         rb_rat = GetComponent<Rigidbody2D>();
@@ -67,22 +63,28 @@ public class rat_movement : MonoBehaviour
     }
     private void Update()
     {
-        if (Input.GetKeyDown(jump_key))
+        if (!ratDead)
         {
-            PressTime = PressTimeSet;
-        }
-        if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
-        {
-            JustGrabbed = false;
+            if (Input.GetKeyDown(jump_key))
+            {
+                PressTime = PressTimeSet;
+            }
+            if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
+            {
+                JustGrabbed = false;
+            }
         }
     }
     // Update is called once per frame
     void FixedUpdate()
     {
-        moveAxisX = Input.GetAxisRaw("Horizontal");
-        moveAxisY = Input.GetAxisRaw("Vertical");
-        if(moveAxisX > 0)
+        if (!ratDead)
         {
+<<<<<<< HEAD
+            moveAxisX = Input.GetAxisRaw("Horizontal");
+            moveAxisY = Input.GetAxisRaw("Vertical");
+            if (moveAxisX > 0)
+=======
             _renderer.flipX = true;
             _anim.SetInteger("Move", 1);
         } else if(moveAxisX < 0)
@@ -102,17 +104,25 @@ public class rat_movement : MonoBehaviour
             //float move = spdf * rate;
             forceangle = new Vector2( negativeslope * Mathf.Cos(slopeAngle * Mathf.PI / 180), Mathf.Sin(slopeAngle * Mathf.PI / 180));
             if (moveAxisX > 0 && r_cast.rightwall && !onSlope|| JustGrabbed|| moveAxisX < 0 && r_cast.leftwall && !onSlope)
+>>>>>>> 49e3e20f8008bf84b7caaefe38889970317ebb13
             {
-                print("waka");
+                _renderer.flipX = true;
             }
-            else
+            if (moveAxisX < 0)
             {
-                Vector2 daforce = new Vector2(forceangle.x * negativeslope, forceangle.y);
-                Debug.DrawRay(transform.position, forceangle, Color.blue);
-                rb_rat.AddForce(forceangle * move * slowdown);
+                _renderer.flipX = false;
             }
-            if (r_cast.grounded && rb_rat.velocity.y <= 0.5 || r_cast.grounded && onSlope)
+            if (!hidden)
             {
+<<<<<<< HEAD
+                float sptrg = speed * moveAxisX;
+                float spdf = sptrg - rb_rat.velocity.x;
+                float rate = (Mathf.Abs(spdf) > 0.01) ? acc_rate : decc_rate;
+                float move = Mathf.Pow(Mathf.Abs(spdf) * rate, movepow) * Mathf.Sign(spdf);
+                //float move = spdf * rate;
+                forceangle = new Vector2(negativeslope * Mathf.Cos(slopeAngle * Mathf.PI / 180), Mathf.Sin(slopeAngle * Mathf.PI / 180));
+                if (moveAxisX > 0 && r_cast.rightwall && !onSlope || JustGrabbed || moveAxisX < 0 && r_cast.leftwall && !onSlope)
+=======
                 _anim.SetBool("Jump", false);
                 GroundTime = GroundTimeSet;
             }
@@ -136,42 +146,80 @@ public class rat_movement : MonoBehaviour
             else
             {
                 if (rb_rat.velocity.y < 0)
+>>>>>>> 49e3e20f8008bf84b7caaefe38889970317ebb13
                 {
-                    rb_rat.gravityScale = gravity * fall;
+                    print("waka");
                 }
                 else
                 {
-                    rb_rat.gravityScale = gravity;
+                    Vector2 daforce = new Vector2(forceangle.x * negativeslope, forceangle.y);
+                    Debug.DrawRay(transform.position, forceangle, Color.blue);
+                    rb_rat.AddForce(forceangle * move * slowdown);
+                }
+                if (r_cast.grounded && rb_rat.velocity.y <= 0.5 || r_cast.grounded && onSlope)
+                {
+
+                    GroundTime = GroundTimeSet;
+                }
+                if (PressTime > 0 && GroundTime > 0)
+                {
+                    rb_rat.velocity = new Vector2(rb_rat.velocity.x, 0);
+                    print("jump");
+                    rb_rat.AddForce(Vector2.up * jumpforce, ForceMode2D.Impulse);
+                    slowdown = slowdownjump;
+                    GroundTime = 0;
+                    PressTime = 0;
+                }
+                if (slopeAngle != 0 && negativeslope == 1)
+                {
+                    rb_rat.gravityScale = 0;
+                    Vector2 normalangle = new Vector2(forceangle.y * negativeslope, -forceangle.x * negativeslope);
+                    Debug.DrawRay(transform.position, normalangle, Color.green);
+                    rb_rat.AddForce(normalangle * gravity * 14);
+                }
+                else
+                {
+                    if (rb_rat.velocity.y < 0)
+                    {
+                        rb_rat.gravityScale = gravity * fall;
+                    }
+                    else
+                    {
+                        rb_rat.gravityScale = gravity;
+                    }
+                }
+                GroundTime -= Time.deltaTime;
+                PressTime -= Time.deltaTime;
+            }
+            if (Grabbed)
+            {
+                if (moveAxisY != 0)
+                {
+                    rb_rat.AddForce(Vector2.up * moveAxisY * speed);
+                }
+                else
+                {
+                    rb_rat.velocity = new Vector2(rb_rat.velocity.x, 0);
                 }
             }
-            GroundTime -= Time.deltaTime;
-            PressTime -= Time.deltaTime;
-        }
-        if (Grabbed)
-        {
-            if (moveAxisY != 0)
+            if (onSlope)
             {
-                rb_rat.AddForce(Vector2.up * moveAxisY * speed);
+                rb_rat.freezeRotation = false;
             }
             else
             {
-                rb_rat.velocity = new Vector2(rb_rat.velocity.x, 0);
+                rb_rat.freezeRotation = true;
+                transform.eulerAngles = Vector3.zero;
             }
         }
-        if (onSlope)
-        {
-           rb_rat.freezeRotation = false;
-        }
-        else
-        {
-            rb_rat.freezeRotation = true;
-            transform.eulerAngles = Vector3.zero;
-        }
+        
+
     }
+
     public void Die()
     {
         transform.position = RespawnPoint;
     }
-    
+
 
 }
